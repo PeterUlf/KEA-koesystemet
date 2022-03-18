@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vejledningskø</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script type="text/javascript" src="script/qrcode.js"></script>
+</head>
+
+<body>
+    <div class="rg-container">
+        <header>
+            <div id="logo">
+                <a id="logolink" href="">
+                    <img src="icons/logo.png" alt="logo">
+                </a>
+            </div>
+            <div id="qrcode"></div>
+
+            <div id="createroom">
+                <form autocomplete="off">
+                    <div class="autocomplete">
+                        <input id="inputRoom" type="text" name="room" data-create="room" value="Intast rum">
+                    </div>
+
+
+
+                    <input type="text" data-create="room_password" value="" class="disabled_textfield" id="room_password">
+                    <br>
+
+                    <div id="createroomButtonBox">
+                        <button id="adminRoomBtn" class="myButton disabled" type="button"> Admin</button>
+                        <button id="createRoomBtn" class="myButton disabled " type="button">Opret</button>
+                        <button id="gotoRoomBtn" class="myButton disabled" type="button">Gå til rum</button>
+                    </div>
+                </form>
+            </div>
+
+        </header>
+
+
+
+        <!-- SELVE VEJLEDNINGSKØEN -->
+
+        <div id="que" class="hide">
+
+            <table class="rg-table zebra" summary="Hed">
+                <caption class="rg-header">
+                    <span class="rg-hed">Kø: </span>
+                </caption>
+
+                <thead>
+                    <tr>
+                        <th class="text ">Navn</th>
+                        <th class="text ">Problem</th>
+                        <th class="text ">Sat i kø:</th>
+                        <th class="text ">Update</th>
+                        <th class="text "></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr class="">
+                        <td class="text " data-title="Navn"></td>
+                        <td class="text " data-title="Problem"></td>
+                        <td class="text " data-title="Tid i kø"></td>
+                        <td class="text " data-title="Update"></td>
+
+                        <td class="text " data-title="">
+                            <button id="insertDialogShow" class="myButton">Tilføj problem</button>
+                        </td>
+                    </tr>
+
+                    <template id="question">
+                        <tr data-content="id">
+                            <td class="text " data-title="Navn" data-content="name">
+                                FullName
+                            </td>
+                            <td class="text " data-title="Problem" data-content="problem_short">
+                                Tekst
+                            </td>
+                            <td class="text " data-title="Tid i kø" data-content="timeInQue">
+                                00:00:00
+                            </td>
+                            <td class="text" data-title="Update">
+                                <button data-content="updateList" class="updateList_1 myButton normal ">
+                                    Update
+                                </button>
+                            </td>
+                            <td class="text" data-title="Fjern">
+                                <button data-content="deleteList" class="deleteList_1 myButton warning">
+                                    Fjern
+                                </button>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+    <div id="loading"><img src="icons/loading.gif" alt="loading image"></div>
+
+    <div id="dialog" class="hide">
+        <div id="dialogContent">
+            <div class="close">
+                <img id="closeDialog" src="icons/close.svg" alt="close" />
+            </div>
+
+            <div id="insertHeader" class="hide">
+                <caption class="rg-header">
+                    <p class="rg-hed">Opret feedback/vejledningsspørgsmål: </p>
+                </caption>
+            </div>
+
+            <div id="delete" class="hide">
+                <caption class="rg-header">
+                    <div class="buttonBox">
+                        <p class="rg-hed">
+                            Problemet løst uden hjælp fra studerende
+                        </p>
+                        <span class="rg-dek">
+                            <button id="removeProblem" class="myButton warning">
+                                Fjern fra køen
+                            </button></span>
+                    </div>
+
+                </caption>
+            </div>
+            <div id="updateProblem" class="hide">
+                <caption class="rg-header">
+                    <p class="rg-hed">
+                        Jeg fik hjælp af:
+                    </p>
+                </caption>
+
+                <div class="solved_by">
+                    <div class="select">
+                        <select id="selections">
+                            <option value="">Nedenstående spm. får min plads. Hent evt existerende spm.
+                                her...
+                            </option>
+
+                            <template id="solved_by">
+                                <option data-id="">Ole</option>
+                            </template>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+            <div id="problem" class="hide">
+                <!-- 
+            ...overtager min plads i køen. -->
+
+                Navn:<br />
+                <input type="text" name="name" data-content="name" /><br />
+                Nyt problem overskrift:<br />
+                <input type="text" name="problem_short" data-content="problem_short" /><br />
+                Evt. længere beskrivelse af problemet:<br />
+                <textarea rows="4" cols="50" name="problem_long" data-content="problem_long"></textarea></><br />
+                <br />
+            </div>
+
+            <div class="buttonBox">
+                <span class="rg-dek">
+                    <button id="updateBtn" class="myButton">
+                        Får pladsen i køen
+                    </button>
+
+                    <button id="insertBtn" class="myButton">
+                        Sæt i kø
+                    </button>
+
+
+
+                </span>
+
+            </div>
+        </div>
+    </div>
+
+    <audio src="sounds/new_problem.mp3" id="new_problem"></audio>
+
+
+    <script src="https://queue-38e6.restdb.io/rest/_jsapi.js"></script>
+    <script src="script/dbconnect.js"></script>
+    <script src="script/loadFromDb.js"></script>
+
+</body>
+
+</html>
