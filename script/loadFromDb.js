@@ -153,8 +153,6 @@ function dataGet(justAddedId) {
 
   runningProcesses++;
 
-  //console.log("dataGet");
-
   fetch(dbUrl + "/problems?per_page=100", {
     method: "get",
     headers: {
@@ -291,7 +289,7 @@ function dataInsert(body) {
 }
 
 function dataUpdate(event, body, idProblemOwner, idProblemHelper) {
-  ////console.log("dataUpdate")
+  //console.log("dataUpdate")
   runningProcesses++;
 
   closeDialog();
@@ -648,10 +646,15 @@ function domShowProblemsTable(problems) {
     clone.querySelector("[data-content=timeInQue]").textContent = format(date);
     clone.querySelector("[data-content=deleteList]").dataset.id = el.id;
 
-    //Giv hjælp knap
-    clone
-      .querySelector("[data-content=helpList]")
-      .addEventListener("click", updateHelp);
+    //hjælp knap
+    let helpKnap = clone.querySelector("[data-content=helpList]");
+    if (el.is_getting_help) {
+      helpKnap.textContent = "Får hjælp";
+      helpKnap.style.backgroundColor = "green";
+    } else {
+      helpKnap.addEventListener("click", () => updateHelp(el.id));
+      helpKnap.style.backgroundColor = "orange";
+    }
 
     //--------------------------------------Klik på delete/update knap --------------------------------------
     clone
@@ -710,12 +713,6 @@ function domShowProblemsTable(problems) {
       document
         .querySelector("#removeProblem")
         .addEventListener("click", deleteRow);
-    }
-
-    function updateHelp() {
-      console.log(this);
-      this.style.background = "green";
-      this.textContent = "får hjælp";
     }
 
     function updateDialogShow() {
@@ -792,6 +789,27 @@ function domShowProblemsTable(problems) {
 
   document.querySelector("#loading").classList.add("hide");
 }
+
+// Insert is getting help into DB
+function updateHelp(id) {
+  console.log(id);
+  let body = {
+    is_getting_help: true,
+  };
+  fetch(dbUrl + "/problems" + "/" + id, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      Authorization: apikey,
+      // "cache-control": "no-cache"
+    },
+    body: JSON.stringify(body),
+    json: true,
+  })
+    .then((e) => e.json())
+    .then((e) => dataGet());
+}
+
 //CHANGE dropdown with parameters
 let dropdownListChosen = (event) => {
   //console.log("HVORNÅR MON DENNE BLIVER KALDT?");
