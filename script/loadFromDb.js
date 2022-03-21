@@ -4,6 +4,7 @@ let deletedIds = [];
 let tempId;
 let problems = [{}];
 let rooms = [{}];
+let aktivtRum;
 //I have set a localstorrage localStorage.getItem('user');
 
 //let mySuperUserPassword = localStorage.getItem("superuserPassword");
@@ -62,8 +63,11 @@ function checkRoomExists() {
           localStorage.getItem("superuserPassword") ===
           currentQueSuperUserPassword
         ) {
-          //SETS A VARIABLE
           mySuperUserPassword = currentQueSuperUserPassword;
+          document.querySelector("#sletRumKnap").classList.remove("hide");
+          document
+            .querySelector("#sletRumKnap")
+            .addEventListener("click", sletRum);
         } else {
           mySuperUserPassword = "";
         }
@@ -89,6 +93,10 @@ function checkRoomExists() {
     });
 
   //if room exixts write the name with a dash - allready exists and make red
+}
+
+function sletRum() {
+  console.log(aktivtRum);
 }
 
 function start() {
@@ -1133,6 +1141,7 @@ function adminRoom() {
     (room) => room.roomname === domData.roomName.value
   );
   currentQueSuperUserPassword = roomtaken[0].room_password;
+  aktivtRum = roomtaken[0];
 
   document
     .querySelector("#room_password")
@@ -1160,8 +1169,6 @@ function adminRoom() {
 
   document.querySelector("#gotoRoomBtn").classList.add("disabled");
   document.querySelector("#gotoRoomBtn").disabled = true;
-
-  document.querySelector("#sletRumKnap").classList.remove("hide");
 }
 
 function clearFieldRoom() {
