@@ -141,6 +141,10 @@ function SHOW_problems_addedProblems_deletedIds_SHOW() {
     return 0;
   });
 
+  let currentProblem = problems.filter(
+    (problem) => problem.id == localStorage.getItem("user")
+  );
+
   domClearProblemsTable();
   //show all
   domShowProblemsTable(problemsWithoutDeleteditems);
@@ -615,19 +619,6 @@ function domShowProblemsTable(problems) {
   //dropdown list
   let dropdownList = document.querySelector("#selections");
 
-  //sorting problems
-  // problems.sort(function (a, b) {
-  //     var x = a.problem_added.toLowerCase();
-  //     var y = b.problem_added.toLowerCase();
-  //     if (x < y) {
-  //         return -1;
-  //     }
-  //     if (x > y) {
-  //         return 1;
-  //     }
-  //     return 0;
-  // });
-
   let currentProblem = problems.filter(
     (problem) => problem.id == localStorage.getItem("user")
   );
@@ -682,6 +673,7 @@ function domShowProblemsTable(problems) {
     if (localStorage.getItem("user") != el.id && mySuperUserPassword == "") {
       clone.querySelector("[data-title=Update]").textContent = "";
       clone.querySelector("[data-title=Fjern]").textContent = "";
+      clone.querySelector("[data-title=Help]").textContent = "";
     }
     qList.appendChild(clone);
     dropdownList.appendChild(clone2);
@@ -793,7 +785,11 @@ function domShowProblemsTable(problems) {
 
 // Updates is_getting_help in DB
 function updateHelp(id, bool) {
-  console.log(id);
+  if (bool) {
+    this.backgroundColor = "orange";
+  } else {
+    this.backgroundColor = "green";
+  }
   let body = {
     is_getting_help: bool,
   };
@@ -1148,7 +1144,6 @@ function adminRoom() {
   if (domData.password.value === currentQueSuperUserPassword) {
     //SETS A VARIABLE
     localStorage.setItem("superuserPassword", domData.password.value);
-    //console.log("nyt localstorrage af superuserpassword")
     document.querySelector("#loading").classList.remove("hide");
     window.history.pushState(
       "index.html",
@@ -1165,6 +1160,8 @@ function adminRoom() {
 
   document.querySelector("#gotoRoomBtn").classList.add("disabled");
   document.querySelector("#gotoRoomBtn").disabled = true;
+
+  document.querySelector("#sletRumKnap").classList.remove("hide");
 }
 
 function clearFieldRoom() {
