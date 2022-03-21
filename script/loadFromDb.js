@@ -634,7 +634,7 @@ function domShowProblemsTable(problems) {
 
   // Loop
   problems.forEach((el, i) => {
-    console.log(el);
+    //console.log(el);
     let clone = templateProblem.content.cloneNode(true);
     let clone2 = templateDropdown.content.cloneNode(true);
     clone.querySelector("[data-content=name]").textContent = el.problem_owner;
