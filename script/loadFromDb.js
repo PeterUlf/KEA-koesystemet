@@ -49,6 +49,7 @@ function checkRoomExists() {
       let roomtaken = rooms.filter(
         (room) => room.roomname === getUrlVars()["room"]
       );
+      aktivtRum = roomtaken;
       ////console.log("roomtaken:", roomtaken);
 
       if (roomtaken.length > 0) {
@@ -1141,7 +1142,7 @@ function adminRoom() {
     (room) => room.roomname === domData.roomName.value
   );
   currentQueSuperUserPassword = roomtaken[0].room_password;
-  aktivtRum = roomtaken[0];
+  //   aktivtRum = roomtaken[0];
 
   document
     .querySelector("#room_password")
