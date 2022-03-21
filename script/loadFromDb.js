@@ -98,7 +98,8 @@ function checkRoomExists() {
 
 function sletRum() {
   if (confirm("Vil du slette rummet?")) {
-    console.log(aktivtRum[0].id);
+    //console.log(aktivtRum[0].id);
+    //problems.forEach((problem) => sletProblem(problem.id));
     fetch(dbUrl + "/rooms" + "/" + aktivtRum[0].id, {
       method: "delete",
       headers: {
@@ -107,8 +108,8 @@ function sletRum() {
         //  "cache-control": "no-cache"
       },
     }).then((e) => e.json());
+    setTimeout(() => location.reload(), 1000); // virker ikke med .then ...?
   }
-  setTimeout(() => location.reload(), 1000);
 }
 
 function start() {
@@ -430,6 +431,7 @@ function dataDelete(event, id) {
 }
 
 function sletProblem(id) {
+  console.log("sletter" + id);
   fetch(dbUrl + "/problems" + "/" + id, {
     method: "delete",
     headers: {
