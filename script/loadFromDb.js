@@ -648,11 +648,12 @@ function domShowProblemsTable(problems) {
 
     //hjælp knap
     let helpKnap = clone.querySelector("[data-content=helpList]");
-    if (el.is_getting_help) {
+    if (el.is_getting_help == 1) {
       helpKnap.textContent = "Får hjælp";
       helpKnap.style.backgroundColor = "green";
+      helpKnap.addEventListener("click", () => updateHelp(el.id, 0));
     } else {
-      helpKnap.addEventListener("click", () => updateHelp(el.id));
+      helpKnap.addEventListener("click", () => updateHelp(el.id, 1));
       helpKnap.style.backgroundColor = "orange";
     }
 
@@ -790,18 +791,17 @@ function domShowProblemsTable(problems) {
   document.querySelector("#loading").classList.add("hide");
 }
 
-// Insert is getting help into DB
-function updateHelp(id) {
+// Updates is_getting_help in DB
+function updateHelp(id, bool) {
   console.log(id);
   let body = {
-    is_getting_help: true,
+    is_getting_help: bool,
   };
   fetch(dbUrl + "/problems" + "/" + id, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json; charset=utf-8",
       Authorization: apikey,
-      // "cache-control": "no-cache"
     },
     body: JSON.stringify(body),
     json: true,
