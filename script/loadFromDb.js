@@ -106,10 +106,9 @@ function sletRum() {
         Authorization: apikey,
         //  "cache-control": "no-cache"
       },
-    })
-      .then((e) => e.json())
-      .then(alert("rum slettet"));
+    }).then((e) => e.json());
   }
+  setTimeout(() => location.reload(), 1000);
 }
 
 function start() {
@@ -428,6 +427,17 @@ function dataDelete(event, id) {
       //how enter works
       domData.currentEnter = document.querySelector("#insertBtn");
     });
+}
+
+function sletProblem(id) {
+  fetch(dbUrl + "/problems" + "/" + id, {
+    method: "delete",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      Authorization: apikey,
+      //  "cache-control": "no-cache"
+    },
+  }).then((e) => e.json());
 }
 
 function dropdownListChosenRow(event, idProblemHelper) {
