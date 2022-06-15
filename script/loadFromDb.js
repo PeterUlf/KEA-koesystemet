@@ -405,8 +405,9 @@ function dataDelete(event, id) {
     });
 }
 
-function dropdownListChosenRow(event, idProblemHelper) {
-  //console.log("dropdownListChosenRow", idProblemHelper);
+function dropdownListChosenRow(idProblemHelper) {
+  //  function dropdownListChosenRow(event, idProblemHelper) {
+  console.log("dropdownListChosenRow", idProblemHelper);
   //This function sets what happens on change of dropdown
 
   document
@@ -631,6 +632,7 @@ function domShowProblemsTable(problems) {
   let currentProblem = problems.filter(
     (problem) => problem.id == localStorage.getItem("user")
   );
+  //console.log(problem);
 
   // Loop
   problems.forEach((el, i) => {
@@ -638,9 +640,12 @@ function domShowProblemsTable(problems) {
     let clone = templateProblem.content.cloneNode(true);
     let clone2 = templateDropdown.content.cloneNode(true);
     clone.querySelector("[data-content=name]").textContent = el.problem_owner;
+    clone
+      .querySelector("[data-content=problem_short]")
+      .classList.add("myProblem");
     clone.querySelector(
       "[data-content=problem_short]"
-    ).innerHTML = `<strong>${el.problem_short}</strong><br> ${el.problem_long} `;
+    ).innerHTML = `<strong>${el.problem_short}</strong><br><span> ${el.problem_long}</span> `;
     //put a Z at the ned to specifi that it is UTC time
     const date = new Date(el.problem_added + "Z");
     clone.querySelector("[data-content=timeInQue]").textContent = format(date);
@@ -654,6 +659,7 @@ function domShowProblemsTable(problems) {
       helpKnap.addEventListener("click", () => updateHelp(el.id, 0));
     } else {
       helpKnap.addEventListener("click", () => updateHelp(el.id, 1));
+      //console.log(el.id);
       helpKnap.style.backgroundColor = "orange";
     }
 
@@ -663,7 +669,7 @@ function domShowProblemsTable(problems) {
       .addEventListener("click", deleteDialogShow);
     clone
       .querySelector("[data-content=updateList]")
-      .addEventListener("click", updateDialogShow);
+      .addEventListener("click", () => updateDialogShow(el.id));
 
     //--------------------------------------Klik på delete/update knap slut --------------------------------------
 
@@ -716,8 +722,11 @@ function domShowProblemsTable(problems) {
         .addEventListener("click", deleteRow);
     }
 
-    function updateDialogShow() {
+    function updateDialogShow(id) {
       //console.log('updateDialogShow');
+
+      //goto relevant id
+      console.log("my id is: " + id);
 
       //HIDE
       document.querySelector("#insertBtn").classList.add("hide");
@@ -785,6 +794,7 @@ function domShowProblemsTable(problems) {
           .removeEventListener("click", updateRow);
       };
       document.querySelector("#updateBtn").addEventListener("click", updateRow);
+      dropdownListChosenRow(id);
     }
   });
 
@@ -793,7 +803,7 @@ function domShowProblemsTable(problems) {
 
 // Updates is_getting_help in DB
 function updateHelp(id, bool) {
-  console.log(id);
+  console.log("updateHelp id er ", id);
   let body = {
     is_getting_help: bool,
   };
@@ -813,9 +823,11 @@ function updateHelp(id, bool) {
 //CHANGE dropdown with parameters
 let dropdownListChosen = (event) => {
   //console.log("HVORNÅR MON DENNE BLIVER KALDT?");
+
   let idProblemHelper = document.querySelector("#selections").value;
-  dropdownListChosenRow(event, idProblemHelper);
-  ////console.log("id og problems: ", idProblemHelper, problems)
+  // dropdownListChosenRow(event, idProblemHelper);
+  dropdownListChosenRow(idProblemHelper);
+  console.log("event: ", event);
 };
 
 function dataCreateRoom() {

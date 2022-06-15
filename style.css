@@ -455,3 +455,8 @@ td.number {
   background-color: DodgerBlue !important;
   color: #ffffff;
 }
+
+.myProblem span {
+  color: red;
+  font-size: 0.7rem;
+}
