@@ -208,7 +208,7 @@ function dataGet(justAddedId) {
 
       runningProcesses--;
       ////console.log("problems i dataGet, runningprocess", runningProcesses);
-      //console.table(problems);
+      // console.table(problems);
       if (runningProcesses <= 0) {
         deletedIds = [];
         SHOW_problems_addedProblems_deletedIds_SHOW();
@@ -611,8 +611,61 @@ function domClearProblemsTable() {
     .forEach((e) => e.remove());
 }
 
+function deleteThisQue() {
+  console.log("deleteThisQue");
+
+  //loop der fjerned alle i nuværende kø
+  console.log(problems);
+  problems.forEach((el, i) => {
+    console.log(el.id);
+
+    dataDelete("", el.id);
+  });
+
+  //HIDE
+  document.querySelector("#dialog").classList.add("hide");
+  document.querySelector("#deleteQueDialog").classList.add("hide");
+  document.querySelector("#delete").classList.add("hide");
+  document.querySelector("#insertBtn").classList.add("hide");
+  document.querySelector("#updateBtn").classList.add("hide");
+  document.querySelector("#problem").classList.add("hide");
+  document.querySelector("#updateProblem").classList.add("hide");
+}
+
+function deleteQueDialogShow() {
+  console.log("deleteQueDialogShow");
+  document.querySelector("#deleteQue").addEventListener("click", deleteThisQue);
+
+  // domData.currentEnter = document.querySelector("#removeProblem");
+
+  //SHOW
+  document.querySelector("#dialog").classList.remove("hide");
+  document.querySelector("#deleteQueDialog").classList.remove("hide");
+
+  //HIDE
+  document.querySelector("#delete").classList.add("hide");
+  document.querySelector("#insertBtn").classList.add("hide");
+  document.querySelector("#updateBtn").classList.add("hide");
+  document.querySelector("#problem").classList.add("hide");
+  document.querySelector("#updateProblem").classList.add("hide");
+}
+
 function domShowProblemsTable(problems) {
-  ////console.log("showContent");
+  console.log("showContent");
+
+  //remove admin buttons meaning the whole row is removed
+  if (document.querySelector("#deleteQueBtn")) {
+    document
+      .querySelector("#deleteQueBtn")
+      .addEventListener("click", deleteQueDialogShow);
+  }
+  console.log("mySuperUserPassword er ", mySuperUserPassword);
+  if (mySuperUserPassword == "") {
+    document.querySelector("[data-title=admin]").classList = "hide";
+  } else {
+    document.querySelector("[data-title=admin]").classList = "";
+  }
+  //remove admin buttons done
 
   let templateProblem = document.querySelector("#question");
   let templateDropdown = document.querySelector("#solved_by");
@@ -621,19 +674,6 @@ function domShowProblemsTable(problems) {
   let qList = document.querySelector("tbody");
   //dropdown list
   let dropdownList = document.querySelector("#selections");
-
-  //sorting problems
-  // problems.sort(function (a, b) {
-  //     var x = a.problem_added.toLowerCase();
-  //     var y = b.problem_added.toLowerCase();
-  //     if (x < y) {
-  //         return -1;
-  //     }
-  //     if (x > y) {
-  //         return 1;
-  //     }
-  //     return 0;
-  // });
 
   let currentProblem = problems.filter(
     (problem) => problem.id == localStorage.getItem("user")
@@ -711,6 +751,7 @@ function domShowProblemsTable(problems) {
       document.querySelector("#delete").classList.remove("hide");
 
       //HIDE
+      document.querySelector("#deleteQueDialog").classList.add("hide");
       document.querySelector("#insertBtn").classList.add("hide");
       document.querySelector("#updateBtn").classList.add("hide");
       document.querySelector("#problem").classList.add("hide");
@@ -1163,6 +1204,7 @@ function adminRoom() {
   document.querySelector("#room_password").placeholder =
     "Intast rummets password";
 
+  //superuser
   if (domData.password.value === currentQueSuperUserPassword) {
     //SETS A VARIABLE
     localStorage.setItem("superuserPassword", domData.password.value);

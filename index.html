@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="da">
 
 <head>
     <meta charset="utf-8" />
@@ -8,7 +8,7 @@
 
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="style.css" />
-    <script type="text/javascript" src="script/qrcode.js"></script>
+    <script src="script/qrcode.js"></script>
 </head>
 
 <body>
@@ -29,7 +29,8 @@
 
 
 
-                    <input type="text" data-create="room_password" value="" class="disabled_textfield" id="room_password">
+                    <input type="text" data-create="room_password" value="" class="disabled_textfield"
+                        id="room_password">
                     <br>
 
                     <div id="createroomButtonBox">
@@ -54,17 +55,27 @@
                 </caption>
 
                 <thead>
+                    <tr class="" data-title="admin">
+                        <td> <button id="deleteQueBtn" class="myButton warning ">Slet kø</button></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
                     <tr>
                         <th class="text ">Navn</th>
                         <th class="text ">Problem</th>
                         <th class="text ">Sat i kø:</th>
                         <th class="text ">Update</th>
                         <th class="text ">Giv hjælp</th>
-                        <th class="text "></th>
+                        <th class="text "> Action</th>
                     </tr>
                 </thead>
 
                 <tbody>
+
+
                     <tr class="">
                         <td class="text " data-title="Navn"></td>
                         <td class="text " data-title="Problem"></td>
@@ -76,6 +87,7 @@
                             <button id="insertDialogShow" class="myButton">Tilføj problem</button>
                         </td>
                     </tr>
+
 
                     <template id="question">
                         <tr data-content="id">
@@ -89,7 +101,7 @@
                                 00:00:00
                             </td>
                             <td class="text" data-title="Update">
-                                <button data-content="updateList" data-id ="test" class="updateList_1 myButton normal ">
+                                <button data-content="updateList" data-id="test" class="updateList_1 myButton normal ">
                                     Update
                                 </button>
                             </td>
@@ -105,6 +117,8 @@
                             </td>
                         </tr>
                     </template>
+
+
                 </tbody>
             </table>
         </div>
@@ -135,6 +149,20 @@
                         <span class="rg-dek">
                             <button id="removeProblem" class="myButton warning">
                                 Fjern fra køen
+                            </button></span>
+                    </div>
+
+                </caption>
+            </div>
+            <div id="deleteQueDialog" class="hide">
+                <caption class="rg-header">
+                    <div class="buttonBox">
+                        <p class="rg-hed">
+                            SLET HELE KØEN
+                        </p>
+                        <span class="rg-dek">
+                            <button id="deleteQue" class="myButton warning">
+                                Slet kø!!
                             </button></span>
                     </div>
 
@@ -173,7 +201,7 @@
                 Nyt problem overskrift:<br />
                 <input type="text" name="problem_short" data-content="problem_short" /><br />
                 Kommentar fra underviser:<br />
-                <textarea rows="4" cols="50" name="problem_long" data-content="problem_long"></textarea></><br />
+                <textarea rows="4" cols="50" name="problem_long" data-content="problem_long"></textarea><br />
                 <br />
             </div>
 
