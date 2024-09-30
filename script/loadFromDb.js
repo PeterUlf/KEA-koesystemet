@@ -296,6 +296,12 @@ function dataUpdate(event, body, idProblemOwner, idProblemHelper) {
 
   //if i update any other than my own, delete the original problem
   if (idProblemHelper != idProblemOwner) {
+    console.log(
+      "idProblemHelper er " +
+        idProblemHelper +
+        "idProblemOwner er: " +
+        idProblemOwner
+    );
     dataDelete(event, idProblemOwner);
     deletedIds.push(idProblemOwner);
   }
@@ -726,7 +732,7 @@ function domShowProblemsTable(problems) {
       //console.log('updateDialogShow');
 
       //goto relevant id
-      console.log("my id is: " + id);
+      console.log("update id is: " + id);
 
       //HIDE
       document.querySelector("#insertBtn").classList.add("hide");
