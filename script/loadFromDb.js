@@ -70,8 +70,8 @@ function checkRoomExists() {
         start();
 
         //add current url to header
-        document.querySelector("#que > table > caption > span").textContent =
-          window.location.href;
+        // document.querySelector("#que > table > caption > span").textContent =
+        //   window.location.href;
 
         //////console.log("currentQueSuperUserPassword = roomtaken.password", currentQueSuperUserPassword, roomtaken.password);
         //return true;
