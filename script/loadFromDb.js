@@ -11,8 +11,6 @@ let mySuperUserPassword = "";
 let currentQueSuperUserPassword;
 let runningProcesses = 0;
 
-setInterval(dataGet, 4000);
-
 const domData = {};
 domData.roomName = document.querySelector("#createroom [data-create=room]");
 domData.password = document.querySelector(
@@ -1215,6 +1213,9 @@ function adminRoom() {
       "Title",
       location.pathname + "?room=" + domData.roomName.value
     );
+    //her setter jeg opdateringsintervallet til kun at gælde hvis man er superuser
+    setInterval(dataGet, 4000);
+
     checkRoomExists();
   } else if (domData.password.value != "") {
     document.querySelector("#room_password").classList.add("warning");
